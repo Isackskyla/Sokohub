@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sokohub - Soko za Kenya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="sokohub.css" >
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+  eruda.init();
+</script>
+</head>
+<body>
+    <!-- HTML body content -->
+    <header>
+        <div class="icon" id="menuIcon">☰</div>
+        <h1>Sokohub</h1>
+        <div class="header-icons">
+            <div class="icon" id="userIcon">👤</div>
+        </div>
+    </header>
+
+    <div id="sideMenu">
+        <div class="menu-item" id="homeMenuItem">🏠 Home</div>
+        <div class="menu-item" id="ordersMenuItem" data-auth-required="true">📦 Orders</div>
+        <div class="menu-item" id="bulkOrderMenuItem" data-auth-required="true">🛒 Buy in Bulk</div>
+        <div class="menu-item" id="registerTraderMenuItem" data-auth-required="true">✍️ Register as Trader</div>
+        <div class="menu-item" id="notificationsMenuItem" data-auth-required="true">🔔 Notifications</div>
+        <div class="menu-item" id="settingsMenuItem" data-auth-required="true">⚙️ Settings</div>
+        <div class="menu-item" id="helpMenuItem">❓ Help</div>
+        <div class="menu-item" id="aboutMenuItem">ℹ️ About</div>
+        <div class="menu-item" id="loginMenuItem" data-guest-only="true">🔑 Login</div>
+        <div class="menu-item" id="signupMenuItem" data-guest-only="true">✍️ Sign Up</div>
+    </div>
+
+    <div id="overlay"></div>
+
+    <div class="container">
+        <button id="back-button">← Back to All Commodities</button>
+
+        <div id="filter-container">
+            <div class="filter-row">
+                <input type="text" id="searchInput" placeholder="Search by name or location...">
+            </div>
+            <div class="filter-row">
+                <select id="commoditySelect">
+                    <option value="all">All Commodities</option>
+                </select>
+                <select id="marketSelect"> <option value="all">All Markets</option>
+                </select>
+                <select id="priceSelect">
+                    <option value="all">Any Price</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="home-content">
+                <div id="commodities-container">
+                    </div>
+            </div>
+
+            <div id="orders-content">
+                <h2>Your Orders</h2>
+                <div id="orders-list">
+                    <p>No orders placed yet.</p>
+                </div>
+            </div>
+
+            <div id="bulk-order-content" style="display: none;">
+                <h2>Bulk Order</h2>
+                <p>Use this section to place large orders for commodities directly, without selecting a specific trader.</p>
+            </div>
+
+            <div id="notifications-content">
+                <h2>Notifications</h2>
+                <div id="notifications-list">
+                    <p>No new notifications.</p>
+                </div>
+            </div>
+
+            <div id="settings-content">
+  <h2><i class="fas fa-cog"></i> Settings</h2>
+  <p>Manage your app preferences and profile settings here.</p>
+
+  <!-- User Profile Section -->
+  <div id="profileSection" class="setting-card">
+    <h3><i class="fas fa-user"></i> Account</h3>
+    <p>Logged in as: <strong id="userEmail"></strong></p>
+    <div class="setting-actions">
+      <button onclick="changeEmail()" class="action-btn">
+        <i class="fas fa-envelope"></i> Change Email
+      </button>
+      <button onclick="changePassword()" class="action-btn">
+        <i class="fas fa-key"></i> Change Password
+      </button>
+      <button onclick="verifyAccount()" class="action-btn">
+        <i class="fas fa-badge-check"></i> Verify Account
+      </button>
+    </div>
+  </div>
+
+  <!-- Notification Preferences -->
+  <div class="setting-card">
+    <h3><i class="fas fa-bell"></i> Notifications</h3>
+    <div class="switch-container">
+      <label>
+        <input type="checkbox" id="sms-notifications" checked>
+        <span class="switch"></span>
+        SMS Alerts
+      </label>
+      <label>
+        <input type="checkbox" id="price-alerts" checked>
+        <span class="switch"></span>
+        Price Change Alerts
+      </label>
+    </div>
+  </div>
+
+  <!-- M-Pesa Settings -->
+  <div class="setting-card">
+    <h3><i class="fas fa-money-bill-wave"></i> M-Pesa Payments</h3>
+    <div class="input-group">
+      <input type="tel" placeholder="2547XXXXXXXX" id="mpesa-number" pattern="254[0-9]{9}">
+      <button onclick="saveMpesaNumber()" class="action-btn">
+        <i class="fas fa-save"></i> Save
+      </button>
+    </div>
+    <p class="hint">Enter your M-Pesa number in format 2547XXXXXXXX</p>
+  </div>
+
+  <!-- Delivery Defaults -->
+  <div class="setting-card">
+    <h3><i class="fas fa-truck"></i> Delivery Preferences</h3>
+    <select id="default-county" class="setting-select">
+      <option value="">Select your county</option>
+      <option value="nairobi">Nairobi</option>
+      <option value="kisumu">Kisumu</option>
+      <option value="nakuru">Nakuru</option>
+    </select>
+    <button onclick="saveDeliveryDefaults()" class="action-btn">
+      <i class="fas fa-map-marker-alt"></i> Set Default Location
+    </button>
+  </div>
+
+  <!-- Appearance -->
+  <div class="setting-card">
+    <h3><i class="fas fa-palette"></i> Appearance</h3>
+    <div class="appearance-options">
+      <button onclick="toggleDarkMode()" class="mode-btn">
+        <i class="fas fa-moon"></i> Dark Mode
+      </button>
+      <select id="language-select" class="setting-select">
+        <option value="en">English</option>
+        <option value="sw">Swahili</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Security -->
+  <div class="setting-card">
+    <h3><i class="fas fa-shield-alt"></i> Security</h3>
+    <button onclick="enableBiometricLogin()" class="action-btn">
+      <i class="fas fa-fingerprint"></i> Enable Fingerprint Login
+    </button>
+    <button onclick="showLoginHistory()" class="action-btn">
+      <i class="fas fa-history"></i> Login History
+    </button>
+  </div>
+
+  <!-- Referral System -->
+  <div class="setting-card">
+    <h3><i class="fas fa-user-plus"></i> Invite Friends</h3>
+    <div class="referral-box">
+      <p>Your referral code:</p>
+      <div class="referral-code" id="referral-code">SH-${userId}</div>
+      <button onclick="shareReferral()" class="action-btn">
+        <i class="fas fa-share"></i> Share Code
+      </button>
+    </div>
+  </div>
+
+  <!-- Danger Zone -->
+  <div class="setting-card danger-zone">
+    <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+    <button onclick="confirmAccountDeletion()" class="danger-btn">
+      <i class="fas fa-trash"></i> Delete Account
+    </button>
+  </div>
+
+  <!-- App Info -->
+  <div class="app-info">
+    <p>Sokohub v1.0.0</p>
+    <button onclick="checkUpdates()" class="text-btn">
+      <i class="fas fa-sync-alt"></i> Check for Updates
+    </button>
+  </div>
+
+  <!-- Logout -->
+  <button onclick="window.logout()" class="logout-btn">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </button>
+</div>
+
+<div id="help-content" class="help-section">
+  <h2><i class="fas fa-question-circle" style="color: #4CAF50;"></i> Help Center</h2>
+  <p class="tagline">Find answers to common questions and support information here.</p>
+
+  <!-- Search Help -->
+  <div class="help-card">
+    <div class="search-bar">
+      <i class="fas fa-search" style="color: #4CAF50;"></i>
+      <input type="text" placeholder="Search help articles..." id="help-search">
+    </div>
+  </div>
+
+  <!-- Popular Topics -->
+  <div class="help-card">
+    <h3><i class="fas fa-fire" style="color: #4CAF50;"></i> Popular Topics</h3>
+    <div class="topic-grid">
+      <button onclick="showHelp('account')" class="topic-btn">
+        <i class="fas fa-user-circle"></i>
+        <span>Account & Login</span>
+      </button>
+      <button onclick="showHelp('payments')" class="topic-btn">
+        <i class="fas fa-credit-card"></i>
+        <span>Payments</span>
+      </button>
+      <button onclick="showHelp('delivery')" class="topic-btn">
+        <i class="fas fa-truck"></i>
+        <span>Delivery</span>
+      </button>
+      <button onclick="showHelp('returns')" class="topic-btn">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Returns</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="help-card">
+    <h3><i class="fas fa-book-open" style="color: #4CAF50;"></i> FAQ</h3>
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <i class="fas fa-chevron-right"></i>
+          How do I reset my password?
+        </button>
+        <div class="accordion-content">
+          <p>Go to <strong>Login > Forgot Password</strong> and follow the instructions sent to your email.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <i class="fas fa-chevron-right"></i>
+          What payment methods do you accept?
+        </button>
+        <div class="accordion-content">
+          <p>We accept M-Pesa, Visa/Mastercard, and PayPal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Support -->
+  <div class="help-card">
+    <h3><i class="fas fa-headset" style="color: #4CAF50;"></i> Contact Us</h3>
+    <div class="contact-options">
+      <button onclick="openLiveChat()" class="action-btn">
+        <i class="fas fa-comment-dots"></i> Live Chat
+      </button>
+      <button onclick="openEmailSupport()" class="action-btn">
+        <i class="fas fa-envelope"></i> Email
+      </button>
+      <button onclick="callSupport()" class="action-btn">
+        <i class="fas fa-phone-alt"></i> Call Support
+      </button>
+    </div>
+    <p class="response-time"><i class="fas fa-clock"></i> Average response: <strong>15 minutes</strong></p>
+  </div>
+</div>
+          <div id="about-content">
+  <div class="about-header">
+    <h2><i class="fas fa-leaf"></i> About Sokohub</h2>
+    <p class="tagline">Connecting Kenya's agricultural traders digitally</p>
+  </div>
+
+  <div class="about-card mission">
+    <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+    <p>To revolutionize agricultural trade in Kenya by creating a transparent, efficient marketplace that connects farmers, traders, and buyers directly.</p>
+  </div>
+
+  <div class="about-card features">
+    <h3><i class="fas fa-star"></i> Key Features</h3>
+    <ul>
+      <li><i class="fas fa-check-circle"></i> Real-time commodity prices</li>
+      <li><i class="fas fa-check-circle"></i> Secure in-app payments via M-Pesa</li>
+      <li><i class="fas fa-check-circle"></i> Nationwide delivery network</li>
+      <li><i class="fas fa-check-circle"></i> Trader verification system</li>
+      <li><i class="fas fa-check-circle"></i> Bulk order discounts</li>
+    </ul>
+  </div>
+
+  <div class="about-card team">
+    <h3><i class="fas fa-users"></i> Our Team</h3>
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="avatar"><i class="fas fa-user-tie"></i></div>
+        <h4>John Mwangi</h4>
+        <p>Founder & CEO</p>
+      </div>
+      <div class="team-member">
+        <div class="avatar"><i class="fas fa-user-cog"></i></div>
+        <h4>Sarah Atieno</h4>
+        <p>Head of Operations</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-card contact">
+    <h3><i class="fas fa-envelope"></i> Contact Us</h3>
+    <p><i class="fas fa-phone"></i> <a href="tel:+254700000000">+254 700 000000</a></p>
+    <p><i class="fas fa-envelope"></i> <a href="mailto:info@sokohub.com">info@sokohub.com</a></p>
+    <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+
+    <div class="social-links">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+
+  <div class="about-card legal">
+    <h3><i class="fas fa-gavel"></i> Legal</h3>
+    <p><a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+    <p class="version">Version: 1.0.0</p>
+    <p class="copyright">© 2023 Sokohub. All rights reserved.</p>
+  </div>
+</div>
+
+            <div id="trader-modal">
+                <div id="trader-modal-content" onclick="event.stopPropagation()">
+                    <span class="modal-close-button" onclick="closeTraderModal()">&times;</span>
+
+                    <div id="step-1" class="modal-step">
+                        <h2 id="modal-title"></h2>
+                        <p><strong>Market:</strong> <span id="modal-market"></span></p>
+                        <p><strong>Commodity:</strong> <span id="modal-commodity"></span></p>
+                        <button onclick="nextStep()">Continue</button>
+                        <button onclick="clearOrder()" class="clear-order-btn">Clear Order</button>
+                    </div>
+
+                    <div id="step-2" class="modal-step" style="display: none;">
+                        <h3>Choose Unit & Quantity</h3>
+                        <p>Choose Unit:</p>
+                        <select id="unit-select" onchange="updateTraderModal()"></select>
+
+                        <p>Price per unit: <strong id="price-per-unit-display">Ksh 0</strong></p>
+
+                        <p>Quantity:</p>
+                        <div class="qty-controls">
+                            <button onclick="changeQty(-1)">-</button>
+                            <input type="number" id="quantity" value="1" min="1" onchange="updateTraderModal()">
+                            <button onclick="changeQty(1)">+</button>
+                        </div>
+                        <p>Current Order Subtotal: <strong id="subtotal-display">Ksh 0</strong></p>
+
+                        <button onclick="prevStep()">Back</button>
+                        <button onclick="nextStep()">Continue</button>
+                    </div>
+                   <div id="trader-step3" class="modal-step">
+    <h3>Delivery Details</h3>
+    <div class="form-group">
+        <label for="buyerCountySelect">Your County:</label>
+        <select id="buyerCountySelect">
+            </select>
+    </div>
+    <div class="form-group">
+        <label for="destinationTownSelect">Delivery Town:</label>
+        <select id="destinationTownSelect">
+            </select>
+    </div>
+    <div class="form-group">
+        <label for="destinationPlaceSelect">Specific Place (Optional):</label>
+        <select id="destinationPlaceSelect">
+            </select>
+    </div>
+
+    <h4>Order Summary</h4>
+    <p>Subtotal: <span id="delivery-subtotal-display">Ksh 0.00</span></p>
+    <p>Delivery Fee: <span id="delivery-fee-display">Ksh 0.00</span></p>
+    <p class="total">Total: <span id="delivery-total-display">Ksh 0.00</span></p>
+
+    <div class="modal-navigation">
+        <button onclick="prevStep()">Back</button>
+        <button onclick="nextStep()">Continue</button>
+    </div>
+</div>
+
+
+                    <div id="step-4" class="modal-step" style="display: none;">
+                        <h3>Confirm Your Order</h3>
+                        <p>Trader: <span><strong id="confirm-trader"></strong></span></p>
+                        <p>Market: <span><strong id="confirm-market"></strong></span></p>
+                        <p>Commodity: <span><strong id="confirm-commodity"></strong></span></p>
+                        <p>Unit & Quantity: <span><strong id="confirm-unit-qty"></strong></span></p>
+                        <p>Weight: <span><strong id="confirm-weight">0 kg</strong></span></p>
+                        <p>Delivery Destination: <span><strong id="confirm-delivery-destination"></strong></span></p>
+                        <p>Delivery Fee: <span>Ksh <strong id="confirm-delivery-fee">0</strong></span></p>
+                        <p>Total Cost: <span>Ksh <strong id="confirm-total-cost">0</strong></span></p>
+                        <button onclick="prevStep()">Back</button>
+                        <button onclick="confirmOrder()">Confirm Order</button>
+                    </div>
+
+                    <div id="step-5" class="modal-step" style="display: none;">
+                        <h3>Order Placed!</h3>
+                        <p id="order-placed-message"></p>
+                        <button onclick="closeTraderModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bulk-order-modal">
+                <div id="bulk-order-modal-content" onclick="event.stopPropagation()">
+                    <span class="modal-close-button" onclick="closeBulkOrderModal()">&times;</span>
+
+                    <div id="bulk-order-step-1" class="modal-step">
+                        <h2>Buy in Bulk</h2>
+                        <h3>Select Commodity</h3>
+                        <p>Choose the commodity you wish to order in bulk:</p>
+                        <select id="bulk-commodity-select">
+                            </select>
+                        <button onclick="nextBulkOrderStep()">Continue</button>
+                        <button onclick="closeBulkOrderModal()" class="clear-order-btn">Cancel Order</button>
+                    </div>
+
+                    <div id="bulk-order-step-2" class="modal-step" style="display: none;">
+                        <h3>Choose Unit & Quantity</h3>
+                        <p>Choose Unit:</p>
+                        <select id="bulk-unit-select" onchange="updateBulkOrderModal()"></select>
+
+                        <p>Average Price per unit: <strong id="bulk-price-per-unit-display">Ksh 0</strong></p><p>Quantity:</p>
+                        <div class="qty-controls">
+                            <button onclick="changeBulkQty(-1)">-</button>
+                            <input type="number" id="bulk-quantity" value="1" min="1" onchange="updateBulkOrderModal()">
+                            <button onclick="changeBulkQty(1)">+</button>
+                        </div>
+                        <p>Current Order Subtotal: <strong id="bulk-subtotal-display">Ksh 0</strong></p>
+
+                        <button onclick="prevBulkOrderStep()">Back</button>
+                        <button onclick="nextBulkOrderStep()">Continue</button>
+                    </div>
+
+                  <div id="bulk-order-step3" class="modal-step">
+    <h3>Delivery Details</h3>
+    <div class="form-group">
+        <label for="buyerCountySelectBulk">Your County:</label>
+        <select id="buyerCountySelectBulk">
+            </select>
+    </div>
+    <div class="form-group">
+        <label for="destinationTownSelectBulk">Delivery Town:</label>
+        <select id="destinationTownSelectBulk">
+            </select>
+    </div>
+    <div class="form-group">
+        <label for="destinationPlaceSelectBulk">Specific Place (Optional):</label>
+        <select id="destinationPlaceSelectBulk">
+            </select>
+    </div>
+
+    <h4>Order Summary</h4>
+    <p>Subtotal: <span id="bulk-delivery-subtotal-display">Ksh 0.00</span></p>
+    <p>Delivery Fee: <span id="bulk-delivery-fee-display">Ksh 0.00</span></p>
+    <p class="total">Total: <span id="bulk-delivery-total-display">Ksh 0.00</span></p>
+
+    <div class="modal-navigation">
+        <button onclick="prevBulkOrderStep()">Back</button>
+        <button onclick="nextBulkOrderStep()">Continue</button>
+    </div>
+</div>
+
+
+                    <div id="bulk-order-step-4" class="modal-step" style="display: none;">
+                        <h3>Confirm Your Bulk Order</h3>
+                        <p>Commodity: <span><strong id="bulk-confirm-commodity"></strong></span></p>
+                        <p>Unit & Quantity: <span><strong id="bulk-confirm-unit-qty"></strong></span></p>
+                        <p>Estimated Weight: <span><strong id="bulk-confirm-weight">0 kg</strong></span></p>
+                        <p id="bulk-confirm-delivery-method-display-container" style="display:none;"><strong>Delivery Method:</strong> <span id="bulk-confirm-delivery-method">N/A</span></p>
+
+                        <p>Delivery Fee: <span>Ksh <strong id="bulk-confirm-delivery-fee">0</strong></span></p>
+                        <p>Total Cost: <span>Ksh <strong id="bulk-confirm-total-cost">0</strong></span></p>
+                        <button onclick="prevBulkOrderStep()">Back</button>
+                        <button onclick="confirmBulkOrder()">Confirm Bulk Order</button>
+                    </div>
+
+                    <div id="bulk-order-step-5" class="modal-step" style="display: none;">
+                        <h3>Bulk Order Placed!</h3>
+                        <p id="bulk-order-placed-message"></p>
+                        <button onclick="closeBulkOrderModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="trader-register-modal">
+                <div id="trader-register-modal-content" onclick="event.stopPropagation()">
+                    <span class="modal-close-button" onclick="closeTraderRegisterModal()">&times;</span>
+
+    <div id="trader-register-modal">
+  <div id="trader-register-modal-content" onclick="event.stopPropagation()">
+    <span class="modal-close-button" onclick="closeTraderRegisterModal()">&times;</span>
+
+    <!-- STEP 1: Trader Details -->
+    <div id="trader-reg-step-1" class="modal-step">
+      <h2>Register as a Trader</h2>
+      <p><strong>Trader Name:</strong></p>
+      <input type="text" id="trader-reg-name" placeholder="e.g., John Mwangi" required>
+
+      <p><strong>Your Market:</strong></p>
+      <select id="trader-reg-market-select" onchange="toggleNewMarketInput()">
+        <option value="" disabled selected>Select your market</option>
+        <option value="new-market">Add New Market</option>
+        <!-- Add dynamic list of markets here -->
+      </select>
+
+      <div id="trader-reg-new-market-container" style="display: none; margin-top: 10px;">
+        <input type="text" id="trader-reg-new-market" placeholder="Enter new market name">
+      </div>
+
+      <button onclick="nextTraderRegStep()">Continue</button>
+      <button onclick="closeTraderRegisterModal()" class="clear-order-btn">Cancel</button>
+    </div>
+
+    <!-- STEP 2: Commodity Selection -->
+    <div id="trader-reg-step-2" class="modal-step" style="display: none;">
+      <h3>What do you sell?</h3>
+      <p>Select your commodity:</p>
+      <select id="trader-reg-commodity-select">
+        <option value="" disabled selected>Select commodity</option>
+        <option value="maize">🌽 Maize</option>
+        <option value="beans">🫘 Beans</option>
+        <option value="rice">🍚 Rice</option>
+        <option value="potatoes">🥔 Potatoes</option>
+        <option value="cabbages">🥬 Cabbages</option>
+        <option value="coffee">☕ Coffee</option>
+        <option value="milk">🥛 Milk</option>
+        <option value="sugar">🧂 Sugar</option>
+        <option value="tea">🍵 Tea</option>
+        <option value="tomatoes">🍅 Tomatoes</option>
+        <option value="custom">Other (enter manually)</option>
+      </select>
+
+      <div id="trader-reg-custom-commodity-container" style="display: none; margin-top: 10px;">
+        <input type="text" id="trader-reg-custom-commodity" placeholder="Enter your commodity">
+      </div>
+
+      <button onclick="prevTraderRegStep()">Back</button>
+      <button onclick="nextTraderRegStep()">Continue</button>
+    </div>
+
+    <!-- STEP 3: Units & Pricing -->
+    <div id="trader-reg-step-3" class="modal-step" style="display: none;">
+      <h3>Units & Pricing</h3>
+      <p>Add unit(s) for the selected commodity:</p>
+
+      <div class="form-group">
+        <label for="trader-reg-unit-name">Unit Name</label>
+        <input type="text" id="trader-reg-unit-name" placeholder="e.g., 90kg bag, 1 Gunia">
+      </div>
+
+      <div class="form-group">
+        <label for="trader-reg-unit-price">Price (Ksh)</label>
+        <input type="number" id="trader-reg-unit-price" placeholder="e.g., 4500" min="0">
+      </div>
+
+      <div class="form-group">
+        <label for="trader-reg-unit-weight">Approximate Weight (kg)</label>
+        <input type="number" id="trader-reg-unit-weight" placeholder="e.g., 90" min="0">
+      </div>
+
+      <button id="add-unit-btn" onclick="addTraderRegUnit()">+ Add Unit</button>
+
+      <div id="trader-reg-unit-list" style="margin-top: 10px;"></div>
+
+      <button onclick="prevTraderRegStep()">Back</button>
+      <button onclick="nextTraderRegStep()">Continue</button>
+    </div>
+
+    <!-- STEP 4: Review & Confirm -->
+    <div id="trader-reg-step-4" class="modal-step" style="display: none;">
+      <h3>Review Your Details</h3>
+      <p><strong>Trader Name:</strong> <span id="trader-reg-confirm-name"></span></p>
+      <p><strong>Market:</strong> <span id="trader-reg-confirm-market"></span></p>
+      <p><strong>Commodity:</strong> <span id="trader-reg-confirm-commodity"></span></p>
+
+      <h4>Units & Prices:</h4>
+      <ul id="trader-reg-confirm-units" style="list-style-type: none; padding-left: 0;"></ul>
+
+      <button onclick="prevTraderRegStep()">Back</button>
+      <button onclick="confirmTraderRegistration()">Confirm Registration</button>
+    </div>
+
+    <!-- STEP 5: Completion -->
+    <div id="trader-reg-step-5" class="modal-step" style="display: none;">
+      <h3>Registration Complete!</h3>
+      <p id="trader-reg-placed-message">Thank you! Your trader profile has been created.</p>
+      <button onclick="closeTraderRegisterModal()">Close</button>
+    </div>
+
+  </div>
+</div>
+
+    <div id="authSection">
+      <div id="loginModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Login</h2>
+            <button class="close-btn" onclick="window.hideModal('loginModal')">×</button>
+          </div>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input type="email" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" required>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="action-btn" onclick="window.hideModal('loginModal')">Cancel</button>
+              <button type="submit" class="action-btn">Login</button>
+            </div>
+          </form>
+          <p>Don't have an account? <a href="#" onclick="window.showSignupModal()">Sign up</a></p>
+        </div>
+      </div>
+
+      <div id="signupModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Sign Up</h2>
+            <button class="close-btn" onclick="window.hideModal('signupModal')">×</button>
+          </div>
+          <form id="signupForm">
+            <div class="form-group">
+              <label for="signupName">Full Name</label>
+              <input type="text" id="signupName" required>
+            </div>
+            <div class="form-group">
+              <label for="signupEmail">Email</label>
+              <input type="email" id="signupEmail" required>
+            </div>
+            <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input type="password" id="signupPassword" required>
+              <small class="password-strength">Minimum 6 characters.</small>
+            </div>
+            <div class="form-group">
+              <label for="signupConfirmPassword">Confirm Password</label>
+              <input type="password" id="signupConfirmPassword" required>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="action-btn" onclick="window.hideModal('signupModal')">Cancel</button>
+              <button type="submit" class="action-btn">Sign Up</button>
+            </div>
+          </form>
+          <p>Already have an account? <a href="#" onclick="window.showLoginModal()">Login</a></p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+ </body>
+<html>

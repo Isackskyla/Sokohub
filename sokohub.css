@@ -1,0 +1,922 @@
+.help-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.tagline {
+  color: #4CAF50;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+}
+
+.help-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.help-card h3 {
+  color: #4CAF50;
+  margin-top: 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.search-bar input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  outline: none;
+  margin-left: 10px;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.topic-btn {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background:#f9f9f9;
+  border: none;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.topic-btn:hover {
+  background: #e8f5e9; /* Light green hover */
+  transform: translateY(-2px);
+}
+
+.topic-btn i {
+  margin-right: 10px;
+  font-size: 18px;
+  color: #4CAF50;
+}
+
+/* Accordion Styles */
+.accordion-header {
+  width: 100%;
+  padding: 12px 0;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.accordion-header i {
+  margin-right: 10px;
+  color: #4CAF50;
+  transition: transform 0.2s;
+}
+
+.accordion-content {
+  padding: 0 25px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.accordion-item.active .accordion-header i {
+  transform: rotate(90deg);
+}
+
+.accordion-item.active .accordion-content {
+  max-height: 200px;
+  padding: 10px 25px;
+}
+
+/* Action Buttons */
+.action-btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.action-btn:hover {
+  background: #d4edda;
+}
+
+.action-btn i {
+  margin-right: 8px;
+  color: #4CAF50;
+}
+
+.response-time {
+  color: #777;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.response-time i {
+  color: #4CAF50;
+  margin-right: 5px;
+}
+/* About Page Styles */
+#about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.about-header .tagline {
+  color: #4CAF50;
+  font-size: 1.1em;
+}
+
+.about-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.about-card h3 {
+  color: #4CAF50;
+  margin-top: 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.about-card ul {
+  padding-left: 20px;
+}
+
+.about-card ul li {
+  margin-bottom: 8px;
+  list-style-type: none;
+}
+
+.about-card ul li i {
+  color: #4CAF50;
+  margin-right: 10px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.team-member {
+  text-align: center;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  background: #f5f5f5;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #4CAF50;
+}
+
+.social-links {
+  margin-top: 15px;
+}
+
+.social-links a {
+  color: #4CAF50;
+  font-size: 24px;
+  margin-right: 15px;
+}
+
+.legal {
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.legal a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.version {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.copyright {
+  color: #777;
+  margin-top: 5px;
+}
+/* Settings Page Styles */
+.setting-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.setting-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.switch-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.danger-zone {
+  border-left: 4px solid #e74c3c;
+}
+
+.referral-code {
+  font-family: monospace;
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.logout-btn {
+  width: 100%;
+  margin-top: 20px;
+  background: #f8f9fa;
+  color: #e74c3c;
+}
+        /* Base Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon {
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Side Menu Styles */
+        #sideMenu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #4CAF50;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            transition: left 0.3s ease;
+            z-index: 1000;
+            padding-top: 70px;
+            box-sizing: border-box;
+        }
+        #sideMenu.open {
+            left: 0;
+        }
+        .menu-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .menu-item:hover {
+            background-color: #388E3C;
+        }
+        .menu-item.hidden {
+            display: none; /* For conditional visibility */
+        }
+
+        /* Overlay Styles */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 999;
+            display: none;
+        }
+        #overlay.active {
+            display: block;
+        }
+
+        /* Filter Styles */
+        #filter-container {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-row:last-child {
+            margin-bottom: 0;
+        }
+        .filter-row input, .filter-row select {
+            flex: 1;
+            min-width: 180px;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        /* Commodity Styles */
+        .commodity-section {
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        .commodity-section h2 {
+            margin-top: 0;
+            cursor: pointer;
+            color: #4CAF50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+        .commodity-section h2:hover {
+            text-decoration: underline;
+        }
+        .commodity-row {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #4CAF50 #f0f0f0;
+        }
+        .commodity-row::-webkit-scrollbar {
+            height: 8px;
+        }
+        .commodity-row::-webkit-scrollbar-thumb {
+            background-color: #4CAF50;
+            border-radius: 10px;
+        }
+        .commodity-row::-webkit-scrollbar-track {
+            background-color: #f0f0f0;
+        }
+        .commodity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        /* NEW TRADER CARD STYLES */
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            cursor: pointer;
+            min-width: 220px;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .card p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        /* Modal Styles (for Login/Signup) */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1001;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .modal-header h2 {
+            margin: 0;
+            color: #4CAF50;
+            font-size: 26px;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.2s ease;
+        }
+        .close-btn:hover {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 15px;
+        }
+        .form-group input, .form-group select { /* Added select here */
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .form-group input:focus, .form-group select:focus { /* Added select here */
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        .form-group input.password-mismatch {
+            border-color: #f44336;
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+        }
+        .form-group .password-strength {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .modal p {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .modal p a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .modal p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Back Button */
+        #back-button {
+            display: none;
+            background-color: #4CAF50;
+            color: white;border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 16px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        #back-button:hover {
+            background-color: #388E3C;
+            transform: translateX(-3px);
+        }
+
+        /* Content Pages */
+        .content > div:not(#trader-modal):not(#bulk-order-modal):not(#trader-register-modal) {
+            display: none;
+        }
+        #home-content {
+            display: block;
+        }
+        #profileSection {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            text-align: center;
+            margin-top: 20px;
+            /* display: none; Managed by JS */
+        }
+        #profileSection h3 {
+            color: #4CAF50;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        /* NEW MODAL STYLES (for Trader, Bulk, Register) */
+        #trader-modal, #bulk-order-modal, #trader-register-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #trader-modal-content, #bulk-order-modal-content, #trader-register-modal-content {
+            background-color: #fefefe;
+            padding: 40px;
+            border: 1px solid #888;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-close-button {
+            color: #aaa;
+            font-size: 36px;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-step {
+            padding-top: 20px;
+        }
+        .modal-step h2, .modal-step h3 {
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .modal-step p {
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #444;
+        }
+        .modal-step strong {
+            color: #000;
+        }
+        .modal-step select,
+        .modal-step input[type="number"],
+        .modal-step input[type="text"] { /* Added text input for trader reg */
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .qty-controls button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 20px;
+            margin: 0 8px;
+            transition: background-color 0.2s ease;
+        }
+        .qty-controls button:hover {
+            background-color: #0056b3;
+        }
+        .qty-controls input {
+            text-align: center;
+            flex-grow: 1;
+            max-width: 150px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 17px;
+            margin-right: 12px;
+            margin-top: 25px;transition: background-color 0.2s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        button[onclick="prevStep()"],
+        .modal-step .prev-btn { /* For dynamic prev buttons */
+            background-color: #6c757d;
+        }
+        button[onclick="prevStep()"]:hover,
+        .modal-step .prev-btn:hover { /* For dynamic prev buttons */
+            background-color: #5a6268;
+        }
+        .clear-order-btn {
+            background-color: #dc3545;
+        }
+        .clear-order-btn:hover {
+            background-color: #c82333;
+        }
+        #step-4 p, #bulk-order-step-4 p, #trader-reg-step-4 p {
+            font-size: 1.1em;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        #step-4 p:last-child, #bulk-order-step-4 p:last-child, #trader-reg-step-4 p:last-child {
+            border-bottom: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #000;
+            margin-top: 20px;
+            border-top: 2px solid #333;
+            padding-top: 15px;
+        }
+        #step-4 p span, #bulk-order-step-4 p span, #trader-reg-step-4 p span {
+            font-weight: normal;
+            color: #000;
+        }
+        #step-4 p strong, #bulk-order-step-4 p strong, #trader-reg-step-4 p strong {
+            font-weight: bold;
+            color: #000;
+            font-size: 1.1em;
+        }
+        #step-5, #bulk-order-step-5, #trader-reg-step-5 {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        #step-5 h3, #bulk-order-step-5 h3, #trader-reg-step-5 h3 {
+            color: #28a745;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+        }
+        #step-5 p, #bulk-order-step-5 p, #trader-reg-step-5 p {
+            font-size: 1.3em;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        /* Order card style (for Orders section) */
+        .order-card {
+            background-color: #e8f5e9; /* Light green background */
+            border: 1px solid #a5d6a7; /* Darker green border */
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .order-card h4 {
+            color: #388E3C;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .order-card p {
+            font-size: 0.95em;
+            margin: 5px 0;
+            color: #444;
+        }
+        .order-card .total {
+            font-weight: bold;
+            color: #000;
+            font-size: 1.1em;
+            margin-top: 10px;
+            border-top: 1px dashed #c8e6c9;
+            padding-top: 8px;
+        }
+
+        /* Notification Card Style */
+        .notification-card {
+            background-color: #e3f2fd; /* Light blue background */
+            border: 1px solid #90caf9; /* Darker blue border */
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 0.95em;
+            color: #333;
+        }
+        .notification-card strong {
+            color: #1976d2;
+        }
+        .notification-card .timestamp {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
+
+
+        /* Trader Register Specifics */
+        .trader-reg-unit-entry {
+            border: 1px dashed #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .trader-reg-unit-entry button {
+            margin-top: 10px;
+            background-color: #f44336;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+        .trader-reg-unit-entry button:hover {
+            background-color: #d32f2f;
+        }
+        #add-unit-btn {
+            background-color: #007bff;
+            margin-bottom: 20px;
+        }
+        #add-unit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .commodity-row {
+                flex-wrap: wrap;
+                overflow-x: visible;
+                justify-content: center;
+            }
+            .card {
+                min-width: calc(50% - 10px);
+                flex-grow: 1;
+            }
+            .commodity-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            .filter-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .filter-row input, .filter-row select {
+                min-width: unset;
+                width: 100%;
+            }
+            header h1 {
+                font-size: 20px;
+            }
+            .icon {
+                font-size: 20px;
+            }
+            #trader-modal-content, #bulk-order-modal-content, #trader-register-modal-content {
+                padding: 20px;
+            }
+            .modal-step h2 {
+                font-size: 24px;
+            }
+            .qty-controls button {
+                width: 38px;
+                height: 38px;
+                font-size: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            header {
+                padding: 10px 15px;
+            }
+            header h1 {
+                font-size: 18px;
+            }
+            .icon {
+                font-size: 18px;
+            }
+            .card {
+                min-width: 100%;
+            }
+            .commodity-section {
+                padding: 15px;
+            }
+            .commodity-section h2 {
+                font-size: 20px;
+            }
+        }
+        /*trader modals colors*/
+        .highlight {
+            background-color:  #4CAF50;
+            transition: background-color 0.3s;
+        }
